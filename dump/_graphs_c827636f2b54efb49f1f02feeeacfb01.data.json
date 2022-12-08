@@ -1,0 +1,2 @@
+{"type":2300,"data":{"_key":"imdb","_id":"_graphs/imdb","_rev":"_fMwuXKS---","edgeDefinitions":[{"collection":"imdb_edges","from":["imdb_vertices"],"to":["imdb_vertices"]}],"orphanCollections":[]}}
+{"type":2300,"data":{"_key":"imdbCleaned","_id":"_graphs/imdbCleaned","_rev":"_fM0BGZq---","edgeDefinitions":[{"collection":"actsIn","from":["Person"],"to":["Movie"]},{"collection":"directed","from":["Person"],"to":["Movie"]},{"collection":"hasMovie","from":["Genre"],"to":["Movie"]}],"orphanCollections":[]}}
