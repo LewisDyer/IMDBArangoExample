@@ -1,0 +1,5 @@
+// Returns 5 random movies in the Action genre.
+FOR m in 1..1 OUTBOUND "Genre/action" hasMovie
+    SORT RAND()
+    LIMIT 5
+    RETURN m

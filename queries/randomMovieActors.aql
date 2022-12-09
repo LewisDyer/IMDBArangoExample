@@ -1,0 +1,7 @@
+// Return all actors from a random movie (note not all movies have actors!)
+
+FOR m in Movie
+    SORT RAND()
+    LIMIT 1
+    FOR a in 1..1 INBOUND m actsIn
+        RETURN {movie: m.label, actor: a.name}
