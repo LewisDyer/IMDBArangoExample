@@ -1,0 +1,14 @@
+// Take a random person, output their Bacon number and give the list of movies attaining that Bacon number
+FOR a in Person
+    SORT RAND()
+    LIMIT 1
+    LET baconPath = ( FOR v
+    IN ANY SHORTEST_PATH "Person/759" TO a actsIn
+    FILTER v.type=="Movie"
+    RETURN v.label)
+    
+    LET message = LENGTH(baconPath) == 0 
+        ? CONCAT(a.name, " does not have a Bacon number.")
+        : CONCAT(a.name, " has a Bacon number of ", LENGTH(baconPath), ".")
+    RETURN {message: message, path: baconPath}
+    
