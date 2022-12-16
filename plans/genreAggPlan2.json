@@ -1,0 +1,390 @@
+{
+    "nodes" : [
+      {
+        "type" : "SingletonNode",
+        "dependencies" : [ ],
+        "id" : 1,
+        "estimatedCost" : 1,
+        "estimatedNrItems" : 1
+      },
+      {
+        "type" : "EnumerateCollectionNode",
+        "dependencies" : [
+          1
+        ],
+        "id" : 2,
+        "estimatedCost" : 32,
+        "estimatedNrItems" : 30,
+        "random" : false,
+        "indexHint" : {
+          "forced" : false,
+          "lookahead" : 1,
+          "type" : "none"
+        },
+        "outVariable" : {
+          "id" : 0,
+          "name" : "g",
+          "isFullDocumentFromCollection" : true,
+          "isDataFromCollection" : true
+        },
+        "projections" : [ ],
+        "filterProjections" : [ ],
+        "count" : false,
+        "producesResult" : true,
+        "readOwnWrites" : false,
+        "useCache" : true,
+        "maxProjections" : 5,
+        "database" : "IMDB",
+        "collection" : "Genre",
+        "satellite" : false
+      },
+      {
+        "type" : "TraversalNode",
+        "dependencies" : [
+          2
+        ],
+        "id" : 3,
+        "estimatedCost" : 23452,
+        "estimatedNrItems" : 780,
+        "database" : "IMDB",
+        "graph" : [
+          "hasMovie"
+        ],
+        "isLocalGraphNode" : false,
+        "isUsedAsSatellite" : false,
+        "defaultDirection" : 2,
+        "directions" : [
+          2
+        ],
+        "edgeCollections" : [
+          "hasMovie"
+        ],
+        "vertexCollections" : [
+          "Genre",
+          "hasMovie"
+        ],
+        "collectionToShard" : {
+        },
+        "isSmart" : false,
+        "isDisjoint" : false,
+        "forceOneShardAttributeValue" : false,
+        "tmpObjVariable" : {
+          "id" : 5,
+          "name" : "4",
+          "isFullDocumentFromCollection" : false,
+          "isDataFromCollection" : false
+        },
+        "tmpObjVarNode" : {
+          "type" : "reference",
+          "typeID" : 45,
+          "name" : "4",
+          "id" : 5
+        },
+        "tmpIdNode" : {
+          "type" : "value",
+          "typeID" : 40,
+          "value" : "",
+          "vType" : "string",
+          "vTypeID" : 4
+        },
+        "options" : {
+          "parallelism" : 1,
+          "refactor" : true,
+          "produceVertices" : false,
+          "maxProjections" : 5,
+          "edgeProjections" : [
+            "_from",
+            "_to"
+          ],
+          "minDepth" : 1,
+          "maxDepth" : 1,
+          "neighbors" : false,
+          "uniqueVertices" : "none",
+          "uniqueEdges" : "path",
+          "order" : "dfs",
+          "weightAttribute" : "",
+          "defaultWeight" : 1,
+          "producePathsVertices" : true,
+          "producePathsEdges" : true,
+          "producePathsWeights" : false,
+          "type" : "traversal"
+        },
+        "indexes" : {
+          "base" : [
+            {
+              "id" : "1",
+              "type" : "edge",
+              "name" : "edge",
+              "fields" : [
+                "_from"
+              ],
+              "selectivityEstimate" : 0.0012809564474807857,
+              "unique" : false,
+              "sparse" : false
+            }
+          ],
+          "levels" : {
+          }
+        },
+        "inVariable" : {
+          "id" : 0,
+          "name" : "g",
+          "isFullDocumentFromCollection" : true,
+          "isDataFromCollection" : true
+        },
+        "fromCondition" : {
+          "type" : "compare ==",
+          "typeID" : 25,
+          "excludesNull" : false,
+          "subNodes" : [
+            {
+              "type" : "attribute access",
+              "typeID" : 35,
+              "name" : "_from",
+              "subNodes" : [
+                {
+                  "type" : "reference",
+                  "typeID" : 45,
+                  "name" : "4",
+                  "id" : 5
+                }
+              ]
+            },
+            {
+              "type" : "value",
+              "typeID" : 40,
+              "value" : "",
+              "vType" : "string",
+              "vTypeID" : 4
+            }
+          ]
+        },
+        "toCondition" : {
+          "type" : "compare ==",
+          "typeID" : 25,
+          "excludesNull" : false,
+          "subNodes" : [
+            {
+              "type" : "attribute access",
+              "typeID" : 35,
+              "name" : "_to",
+              "subNodes" : [
+                {
+                  "type" : "reference",
+                  "typeID" : 45,
+                  "name" : "4",
+                  "id" : 5
+                }
+              ]
+            },
+            {
+              "type" : "value",
+              "typeID" : 40,
+              "value" : "",
+              "vType" : "string",
+              "vTypeID" : 4
+            }
+          ]
+        }
+      },
+      {
+        "type" : "CollectNode",
+        "dependencies" : [
+          3
+        ],
+        "id" : 4,
+        "estimatedCost" : 24076,
+        "estimatedNrItems" : 624,
+        "groups" : [
+          {
+            "outVariable" : {
+              "id" : 2,
+              "name" : "genre",
+              "isFullDocumentFromCollection" : false,
+              "isDataFromCollection" : false
+            },
+            "inVariable" : {
+              "id" : 0,
+              "name" : "g",
+              "isFullDocumentFromCollection" : true,
+              "isDataFromCollection" : true
+            }
+          }
+        ],
+        "aggregates" : [
+          {
+            "outVariable" : {
+              "id" : 3,
+              "name" : "length",
+              "isFullDocumentFromCollection" : false,
+              "isDataFromCollection" : false
+            },
+            "type" : "LENGTH"
+          }
+        ],
+        "isDistinctCommand" : false,
+        "specialized" : true,
+        "collectOptions" : {
+          "method" : "hash"
+        }
+      },
+      {
+        "type" : "SortNode",
+        "dependencies" : [
+          4
+        ],
+        "id" : 5,
+        "estimatedCost" : 29870.090984570044,
+        "estimatedNrItems" : 624,
+        "elements" : [
+          {
+            "inVariable" : {
+              "id" : 3,
+              "name" : "length",
+              "isFullDocumentFromCollection" : false,
+              "isDataFromCollection" : false
+            },
+            "ascending" : false
+          }
+        ],
+        "stable" : false,
+        "limit" : 0,
+        "strategy" : "standard"
+      },
+      {
+        "type" : "CalculationNode",
+        "dependencies" : [
+          5
+        ],
+        "id" : 6,
+        "estimatedCost" : 30494.090984570044,
+        "estimatedNrItems" : 624,
+        "expression" : {
+          "type" : "object",
+          "typeID" : 42,
+          "subNodes" : [
+            {
+              "type" : "object element",
+              "typeID" : 43,
+              "name" : "genre",
+              "subNodes" : [
+                {
+                  "type" : "attribute access",
+                  "typeID" : 35,
+                  "name" : "label",
+                  "subNodes" : [
+                    {
+                      "type" : "reference",
+                      "typeID" : 45,
+                      "name" : "genre",
+                      "id" : 2
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type" : "object element",
+              "typeID" : 43,
+              "name" : "length",
+              "subNodes" : [
+                {
+                  "type" : "reference",
+                  "typeID" : 45,
+                  "name" : "length",
+                  "id" : 3
+                }
+              ]
+            }
+          ]
+        },
+        "outVariable" : {
+          "id" : 7,
+          "name" : "6",
+          "isFullDocumentFromCollection" : false,
+          "isDataFromCollection" : false
+        },
+        "canThrow" : false,
+        "expressionType" : "simple"
+      },
+      {
+        "type" : "ReturnNode",
+        "dependencies" : [
+          6
+        ],
+        "id" : 7,
+        "estimatedCost" : 31118.090984570044,
+        "estimatedNrItems" : 624,
+        "inVariable" : {
+          "id" : 7,
+          "name" : "6",
+          "isFullDocumentFromCollection" : false,
+          "isDataFromCollection" : false
+        },
+        "count" : true
+      }
+    ],
+    "rules" : [
+      "move-calculations-up",
+      "remove-redundant-sorts",
+      "optimize-traversals",
+      "move-calculations-down"
+    ],
+    "collections" : [
+      {
+        "name" : "Genre",
+        "type" : "read"
+      },
+      {
+        "name" : "hasMovie",
+        "type" : "read"
+      }
+    ],
+    "variables" : [
+      {
+        "id" : 0,
+        "name" : "g",
+        "isFullDocumentFromCollection" : true,
+        "isDataFromCollection" : true
+      },
+      {
+        "id" : 9,
+        "name" : "8",
+        "isFullDocumentFromCollection" : false,
+        "isDataFromCollection" : false
+      },
+      {
+        "id" : 1,
+        "name" : "m",
+        "isFullDocumentFromCollection" : false,
+        "isDataFromCollection" : false
+      },
+      {
+        "id" : 2,
+        "name" : "genre",
+        "isFullDocumentFromCollection" : false,
+        "isDataFromCollection" : false
+      },
+      {
+        "id" : 3,
+        "name" : "length",
+        "isFullDocumentFromCollection" : false,
+        "isDataFromCollection" : false
+      },
+      {
+        "id" : 5,
+        "name" : "4",
+        "isFullDocumentFromCollection" : false,
+        "isDataFromCollection" : false
+      },
+      {
+        "id" : 7,
+        "name" : "6",
+        "isFullDocumentFromCollection" : false,
+        "isDataFromCollection" : false
+      }
+    ],
+    "estimatedCost" : 31118.090984570044,
+    "estimatedNrItems" : 624,
+    "isModificationQuery" : false
+  }
